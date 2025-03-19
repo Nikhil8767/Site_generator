@@ -12,10 +12,14 @@ import Lookup from '@/app/data/Lookup'
 import { Button } from '@/components/ui/button'
 import { useGoogleLogin } from '@react-oauth/google';
 import { UserDetailContext } from '@/app/context/UserDetailContext';
+import { useMutation } from 'convex/react'
+import { api } from '@/convex/_generated/api'
+import uuid4 from 'uuid4'
   
 
 function SignInDialog  ({openDialog,closeDialog})  {
     const {userDetail,setUserDetail}=useContext(UserDetailContext);
+    const CreateUser=useMutation(api.user.CreateUser);
 
     
 const googleLogin = useGoogleLogin ({
@@ -27,6 +31,20 @@ const googleLogin = useGoogleLogin ({
       );
   
       console.log(userInfo);
+      const user=userInfo.data;
+      await CreateUser({
+        name:user?.name,
+        email:user?.email,
+        picture:user?.picture,
+        uid:uuid4()
+      })
+
+      if(typeof window!=undefined){
+        localStorage.setItem('user',JSON.stringify(user))
+      }
+
+
+
       setUserDetail(userInfo?.data);
       closeDialog(false);
     },

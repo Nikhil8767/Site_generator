@@ -15,7 +15,7 @@
     "axios": "^1.7.9",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "convex": "^1.19.5",
+    "convex": "^1.21.0",
     "dedent": "^1.5.3",
     "lucide-react": "^0.475.0",
     "next": "14.2.23",
@@ -24,7 +24,8 @@
     "react-dom": "^18",
     "react-icons": "^5.4.0",
     "tailwind-merge": "^3.0.1",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "uuid4": "^2.0.3"
   },
   "devDependencies": {
     "postcss": "^8",
