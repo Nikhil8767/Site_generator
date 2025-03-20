@@ -7,20 +7,35 @@ import { ArrowRight } from 'lucide-react'
 import React, { useContext, useState } from 'react'
 import { FaLink } from "react-icons/fa";
 import SignInDialog from './SignInDialog';
+import { useMutation } from 'convex/react';
+import { api } from '@/convex/_generated/api';
+import { CreateWorkSpace } from '@/convex/workSpace';
+import { useRouter } from 'next/navigation';
 
 const Hero = () => {
     const [userInput,setUserInput]=useState();
     const {messages,setMessages}=useContext(MessagesContext);
     const {userDetail,steUserDetail}=useContext(UserDetailContext);
     const [openDialog,setOpenDialog]=useState(false);
-    const onGenerate=(input)=>{
+    const CreateWorkSpace=useMutation(api.workSpace.CreateWorkSpace)
+    const router=useRouter();
+    const onGenerate=async(input)=>{
         if(!userDetail?.name){
             setOpenDialog(true);
         }
-        setMessages({
+        const msg={
             role:'user',
             content:input
+        }
+        setMessages(msg);
+        
+        const workSpaceId=await CreateWorkSpace({
+            user:userDetail._id,
+            messages:[msg]
         })
+        console.log(workSpaceId);
+        router.push('/workspace/'+workSpaceId);
+        
     }
     return (
         <div className='flex flex-col items-center mt-36 xl:mt-52 gap-2'>
