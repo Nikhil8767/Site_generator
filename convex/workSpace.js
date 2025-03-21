@@ -1,5 +1,5 @@
 import { v } from "convex/values";
-import { mutation } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
 
 
 export const CreateWorkSpace=mutation({
@@ -13,5 +13,15 @@ export const CreateWorkSpace=mutation({
             user:args.user
         });
         return workSpaceId;
+    }
+})
+
+export const GetWorkspace=query({
+    args:{
+        workSpaceId:v.id('workSpace')
+    },
+    handler:async(ctx,args)=>{
+        const result=await ctx.db.get(args.workSpaceId);
+        return result;
     }
 })
