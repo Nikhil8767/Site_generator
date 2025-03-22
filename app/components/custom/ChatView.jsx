@@ -3,7 +3,7 @@ import { MessagesContext } from '@/app/context/MessagesContext';
 import { UserDetailContext } from '@/app/context/UserDetailContext';
 import Color from '@/app/data/Color';
 import { api } from '@/convex/_generated/api';
-import { useConvex } from 'convex/react';
+import { useConvex, useMutation } from 'convex/react';
 import { useQuery } from 'convex/react';
 import { useParams } from 'next/navigation'
 import React, { useContext, useEffect, useState } from 'react'
@@ -15,6 +15,7 @@ import axios from 'axios';
 import Promt from '@/app/data/Promt';
 // import { run } from '.../configs/AiModel.jsx'; 
 import Prompt from '@/app/data/Prompt';
+import ReactMarkdown from "react-markdown"
 
 const Chatview = () => {
      const {id}=useParams();
@@ -23,6 +24,7 @@ const Chatview = () => {
      const {messages,setMessages}=useContext(MessagesContext)
      const [userInput,setUserInput]=useState();
      const [loading,setLoading]=useState(false);
+     const UpdateMessages=useMutation(api.workSpace.UpdateMessages)
 
     
      useEffect(()=>{
@@ -57,12 +59,17 @@ const Chatview = () => {
         },{
             headers: { 'Content-Type': 'application/json' }
         });
-        console.log(result.data.result);
-
-        setMessages(prev=>[...prev,{
+        // console.log(result.data.result);
+        const aiResp={
             role:'ai',
             content:result.data.result
-        }])
+        }
+
+        setMessages(prev=>[...prev,aiResp])
+        await UpdateMessages({
+            messages:[...messages,aiResp],
+            workSpaceId:id
+        })
         setLoading(false)
      }
 
@@ -70,7 +77,8 @@ const Chatview = () => {
         setMessages(prev=>[...prev,{
             role:'user',
             content:input
-        }])
+        }]);
+        setUserInput('')
      }
 
     
@@ -85,7 +93,7 @@ const Chatview = () => {
                 }}>
                     {msg?.role==='user'&& (<Image src={userDetail?.picture} alt='userImage' width={35} height={35}
                         className='rounded-full'/>)}
-                    <h2>{msg.content}</h2>
+                   <div className='flex flex-col'> <ReactMarkdown>{msg.content}</ReactMarkdown></div>
                    
                 </div>
             ))}
@@ -103,6 +111,7 @@ const Chatview = () => {
              ' style={{backgroundColor:Color.BACKGROUND}}>
                 <div className='flex gap-2'>
                     <textarea placeholder={Lookup.INPUT_PLACEHOLDER}
+                    value={userInput}
                     onChange={(e)=>setUserInput(e.target.value)} className='outline-none bg-transparent w-full h-32 m-h-56 resize' />
                     {userInput&& <ArrowRight onClick={()=>onGenerate(userInput)}
                     className='bg-blue-500 p-2 h-8 w-8 rounded-md cursor-pointer'/>}
