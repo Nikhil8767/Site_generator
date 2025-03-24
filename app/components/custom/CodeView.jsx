@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {
   SandpackProvider,
   SandpackLayout,
@@ -8,10 +8,42 @@ import {
   SandpackFileExplorer,
 } from "@codesandbox/sandpack-react";
 import Lookup from '@/app/data/Lookup';
+import axios from 'axios';
+import { MessagesContext } from '@/app/context/MessagesContext';
+import Prompt from '@/app/data/Prompt';
 
 const CodeView = () => {
   const [activeTab,setActiveTab]=useState("code");
-  const [files,setFiles]=useState(Lookup?.DEFAULT_FILE)
+  const [files,setFiles]=useState(Lookup?.DEFAULT_FILE);
+  const {messages,setMessages}=useContext(MessagesContext);
+
+
+  useEffect(()=>{
+          if(messages?.length>0){
+              const role=messages[messages?.length-1].role;
+  
+              if(role=='user'){
+                  GenerateAiCode();
+              }
+          }
+       },[messages])
+
+  const GenerateAiCode=async()=>{
+    const PROMPT=JSON.stringify(messages)+" "+Prompt.CODE_GEN_PROMPT;
+    const result=await axios.post('/api/gen-ai-code',{
+      prompt:PROMPT
+    });
+    console.log(result.data);
+    const aiResp=result.data;
+
+    const mergedFiles={...Lookup.DEFAULT_FILE,...aiResp?.files}
+    setFiles(mergedFiles)
+    
+  }
+
+
+
+
   return (
     <div>
       <div className='bg-[#181818] w-full p-2 border'>
