@@ -8,6 +8,8 @@ import { UserDetailContext } from './context/UserDetailContext'
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { useConvex } from 'convex/react'
 import { api } from '@/convex/_generated/api'
+import { Sidebar } from 'lucide-react'
+import AppSideBar from './components/custom/AppSideBar'
 
 
 
@@ -47,7 +49,10 @@ function Provider  ({ children }) {
                     disableTransitionOnChange
                 >
                     <Header />
+                    <AppSideBar/>
+                    <SidebarProvider>
                     {children}
+                    </SidebarProvider>
                 </NextThemesProvider>
             </MessagesContext.Provider>
             </UserDetailContext.Provider>

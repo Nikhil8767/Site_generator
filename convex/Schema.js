@@ -8,11 +8,14 @@ export default defineSchema({
         email:v.string(),
         picture:v.string(),
         uid:v.string()
+        
     }),
 
     workSpace:defineTable({
         messages:v.any(),
         fileData:v.optional(v.any()),
-        user:v.id('users')
+        user:v.id('users'),
+        files: v.optional(v.object(v.string(), v.object({ code: v.string() })))
+       
     })
 })
