@@ -5,12 +5,14 @@ import {
     SidebarFooter,
     SidebarGroup,
     SidebarHeader,
-  } from "@/components/ui/sidebar"
+  } from "@/app/components/ui/sidebar"
 
 const AppSideBar = () => {
   return (
     <Sidebar>
-    <SidebarHeader />
+    <SidebarHeader>
+      <Image src={'./logo.png'} alt='site logo'/>
+    </SidebarHeader>
     <SidebarContent>
       <SidebarGroup />
       <SidebarGroup />

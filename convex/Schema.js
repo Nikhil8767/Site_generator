@@ -15,7 +15,10 @@ export default defineSchema({
         messages:v.any(),
         fileData:v.optional(v.any()),
         user:v.id('users'),
-        files: v.optional(v.object(v.string(), v.object({ code: v.string() })))
+        files: v.optional(v.record(
+            v.string(), // Key (filename)
+            v.object({ code: v.string() }) // Value
+        ))
        
     })
 })

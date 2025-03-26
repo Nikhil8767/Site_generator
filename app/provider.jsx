@@ -10,7 +10,8 @@ import { useConvex } from 'convex/react'
 import { api } from '@/convex/_generated/api'
 import { Sidebar } from 'lucide-react'
 import AppSideBar from './components/custom/AppSideBar'
-
+import { SidebarProvider } from './components/ui/sidebar'
+// import SidebarProvider
 
 
 function Provider  ({ children }) {

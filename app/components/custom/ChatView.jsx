@@ -21,7 +21,7 @@ const Chatview = () => {
      const {id}=useParams();
      const convex=useConvex();
      const {userDetail,setUserDetail}=useContext(UserDetailContext)
-     const {messages,setMessages}=useContext(MessagesContext)
+     const {messages=[],setMessages}=useContext(MessagesContext)
      const [userInput,setUserInput]=useState();
      const [loading,setLoading]=useState(false);
      const UpdateMessages=useMutation(api.workSpace.UpdateMessages)
@@ -35,20 +35,32 @@ const Chatview = () => {
         const result=await convex.query(api.workSpace.GetWorkspace,{
             workSpaceId:id
         })
-        setMessages(result?.messages)
+        // setMessages(result?.messages)
+        setMessages(Array.isArray(result?.messages) ? result.messages : []);
+
         console.log(result);
         
      }
 
-     useEffect(()=>{
-        if(messages?.length>0){
-            const role=messages[messages?.length-1].role;
+    //  useEffect(()=>{
+    //     if(messages?.length>0){
+    //         const role=messages[messages?.length-1].role;
 
-            if(role=='user'){
+    //         if(role=='user'){
+    //             GetAiResponse();
+    //         }
+    //     }
+    //  },[messages])
+
+    useEffect(() => {
+        if (Array.isArray(messages) && messages.length > 0) {
+            const role = messages[messages.length - 1]?.role;
+            if (role === 'user') {
                 GetAiResponse();
             }
         }
-     },[messages])
+    }, [messages]);
+    
 
 
      const GetAiResponse=async()=>{
