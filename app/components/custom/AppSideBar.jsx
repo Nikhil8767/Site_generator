@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import {
     Sidebar,
@@ -5,20 +6,21 @@ import {
     SidebarFooter,
     SidebarGroup,
     SidebarHeader,
-  } from "@/app/components/ui/sidebar"
+  } from "@/app/components/ui/sidebar.jsx"
 
 const AppSideBar = () => {
   return (
     <Sidebar>
-    <SidebarHeader>
-      <Image src={'./logo.png'} alt='site logo'/>
-    </SidebarHeader>
-    <SidebarContent>
-      <SidebarGroup />
-      <SidebarGroup />
-    </SidebarContent>
-    <SidebarFooter />
-  </Sidebar>
+      <SidebarHeader classname="p-5">
+        Image
+      </SidebarHeader>
+      <SidebarContent >
+        <SidebarGroup></SidebarGroup>
+        <SidebarGroup></SidebarGroup>
+      </SidebarContent>
+      <SidebarFooter>
+      </SidebarFooter>
+    </Sidebar>
   )
 }
 
