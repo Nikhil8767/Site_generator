@@ -1,3 +1,21 @@
+Site Generator is a powerful and minimal tool that lets you create lightning-fast, customizable static websites with ease. Whether you're building a blog, portfolio, or documentation, this generator helps you convert structured content (like markdown or templates) into clean, production-ready HTML.
+
+✅ Features:
+📄 Markdown to HTML conversion
+
+🎨 Customizable themes and templates
+
+⚡ Fast and lightweight builds
+
+🧩 Modular structure for easy scaling
+
+🛠️ Ideal for blogs, documentation, and personal websites
+
+🧠 Why Use Site Generator?
+Unlike bulky CMS platforms, this tool is designed for speed, simplicity, and full control over your static content. No databases, no complex setup—just content and code.
+
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
